@@ -1,3 +1,3 @@
 ## Budget Buddy Backend
 
-Your Budget, Your Rules
+Your Budget, Your Rules.
