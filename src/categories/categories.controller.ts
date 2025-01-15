@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Delete,
-  BadRequestException,
   Param,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
@@ -17,33 +16,17 @@ export class CategoriesController {
 
   @Post()
   async create(@Body() createCategoryDto: Prisma.CategoryCreateInput) {
-    try {
-      const category = await this.categoriesService.create(createCategoryDto);
-      return category;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    return this.categoriesService.create(createCategoryDto);
   }
 
   @Get()
   async findAll() {
-    try {
-      const categories = await this.categoriesService.findAll();
-      return categories;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    return this.categoriesService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    try {
-      const category = await this.categoriesService.findOne(id);
-
-      return category;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    return this.categoriesService.findOne(id);
   }
 
   @Patch(':id')
@@ -51,24 +34,11 @@ export class CategoriesController {
     @Param('id') id: string,
     @Body() updateCategoryDto: Prisma.CategoryUpdateInput,
   ) {
-    try {
-      const category = await this.categoriesService.update(
-        id,
-        updateCategoryDto,
-      );
-
-      return category;
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    return this.categoriesService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    try {
-      return this.categoriesService.remove(id);
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
+    return this.categoriesService.remove(id);
   }
 }

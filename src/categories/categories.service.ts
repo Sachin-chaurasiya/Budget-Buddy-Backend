@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from '../database/database.service';
 
@@ -6,37 +10,60 @@ import { DatabaseService } from '../database/database.service';
 export class CategoriesService {
   constructor(private readonly databaseService: DatabaseService) {}
   async create(createCategoryDto: Prisma.CategoryCreateInput) {
-    return this.databaseService.category.create({
-      data: createCategoryDto,
-    });
+    try {
+      return this.databaseService.category.create({
+        data: createCategoryDto,
+      });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async findAll() {
-    return this.databaseService.category.findMany();
+    try {
+      const categories = await this.databaseService.category.findMany();
+      return categories;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async findOne(id: string) {
-    return this.databaseService.category.findUnique({
-      where: {
-        id,
-      },
-    });
+    try {
+      const category = await this.databaseService.category.findUnique({
+        where: {
+          id,
+        },
+      });
+
+      return category;
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
   }
 
   async update(id: string, updateCategoryDto: Prisma.CategoryUpdateInput) {
-    return this.databaseService.category.update({
-      where: {
-        id,
-      },
-      data: updateCategoryDto,
-    });
+    try {
+      return this.databaseService.category.update({
+        where: {
+          id,
+        },
+        data: updateCategoryDto,
+      });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async remove(id: string) {
-    return this.databaseService.category.delete({
-      where: {
-        id,
-      },
-    });
+    try {
+      return this.databaseService.category.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }
