@@ -2,6 +2,7 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from 'nestjs-prisma';
 import { HttpStatus } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -25,6 +26,19 @@ async function bootstrap() {
 
   // Set global prefix for all routes in the application "/api"
   app.setGlobalPrefix('api');
+
+  // Swagger API documentation setup start
+  const config = new DocumentBuilder()
+    .setTitle('Budget Buddy API')
+    .setDescription('Your Budget,Your Rules')
+    .setVersion('1.0')
+    .addTag('BudgetBuddy', 'Manage your budget, your budget, your rules')
+    .build();
+
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, documentFactory);
+  // Swagger API documentation setup end
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
