@@ -5,6 +5,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { DatabaseModule } from './database/database.module';
 import { UserSettingsModule } from './user-settings/user-settings.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { HistoryModule } from './history/history.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { TransactionsModule } from './transactions/transactions.module';
     DatabaseModule,
     UserSettingsModule,
     TransactionsModule,
+    HistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
