@@ -38,7 +38,7 @@ model Transaction {
   updatedAt    DateTime @default(now())
   amount       Float
   description  String
-  date         DateTime
+  date         DateTime @default(now())
   userId       String
   type         String   @default("income")
   category     String
