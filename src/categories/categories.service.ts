@@ -1,17 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from '../database/database.service';
-import { randomUUID } from 'node:crypto';
 
 @Injectable()
 export class CategoriesService {
   constructor(private readonly databaseService: DatabaseService) {}
   async create(createCategoryDto: Prisma.CategoryCreateInput) {
     return this.databaseService.category.create({
-      data: {
-        ...createCategoryDto,
-        userId: createCategoryDto.userId ?? randomUUID(),
-      },
+      data: createCategoryDto,
     });
   }
 
