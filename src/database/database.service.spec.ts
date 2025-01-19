@@ -15,4 +15,8 @@ describe('DatabaseService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it("should have the 'onModuleInit' method", () => {
+    expect(service.onModuleInit).toBeDefined();
+  });
 });
